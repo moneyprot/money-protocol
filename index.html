@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Money Protocol — Autonomous DeFi on Solana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c0a;
+    --bg2: #0b110d;
+    --bg3: #0f1811;
+    --green: #00e88f;
+    --green-mid: #00a86b;
+    --green-dim: rgba(0,232,143,0.13);
+    --green-glow: rgba(0,232,143,0.06);
+    --sol: #9945FF;
+    --sol-dim: rgba(153,69,255,0.15);
+    --text: #dff0e8;
+    --muted: #3d6050;
+    --border: rgba(0,232,143,0.1);
+    --card-bg: rgba(255,255,255,0.025);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Syne',sans-serif; overflow-x:hidden; }
+  body::before {
+    content:''; position:fixed; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:999; opacity:0.5;
+  }
+  nav {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 48px; border-bottom:1px solid var(--border);
+    position:sticky; top:0; background:rgba(8,12,10,0.94);
+    backdrop-filter:blur(16px); z-index:100;
+  }
+  .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .logo img { width:32px; height:32px; object-fit:contain; }
+  .logo-text { font-family:'Space Mono',monospace; font-size:15px; color:var(--green); letter-spacing:0.04em; }
+  .nav-links { display:flex; gap:28px; align-items:center; }
+  .nav-links a { color:var(--muted); text-decoration:none; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--text); }
+  .nav-twitter { display:flex; align-items:center; gap:6px; color:var(--muted) !important; }
+  .nav-twitter:hover { color:var(--green) !important; }
+  .nav-twitter svg { width:14px; height:14px; fill:currentColor; }
+  .nav-cta {
+    background:var(--green); color:#000; padding:10px 22px;
+    font-family:'Space Mono',monospace; font-size:12px; font-weight:700;
+    letter-spacing:0.06em; border:none; cursor:pointer;
+    transition:box-shadow 0.2s, transform 0.2s; text-decoration:none;
+  }
+  .nav-cta:hover { box-shadow:0 0 28px rgba(0,232,143,0.4); transform:translateY(-1px); }
+  .sol-badge {
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--sol-dim); border:1px solid rgba(153,69,255,0.25);
+    padding:4px 12px; font-family:'Space Mono',monospace; font-size:10px;
+    letter-spacing:0.12em; color:#b57aff; text-transform:uppercase;
+  }
+  .sol-dot { width:6px; height:6px; border-radius:50%; background:var(--sol); box-shadow:0 0 8px var(--sol); }
+  .hero {
+    min-height:88vh; display:flex; flex-direction:column; justify-content:center;
+    padding:80px 48px; position:relative; overflow:hidden;
+  }
+  .hero-grid-bg {
+    position:absolute; inset:0;
+    background-image:linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 90% 80% at 40% 50%, black 10%, transparent 100%);
+  }
+  .hero-glow { position:absolute; width:700px; height:700px; border-radius:50%; background:radial-gradient(circle, rgba(0,232,143,0.07) 0%, transparent 70%); top:-150px; left:-150px; pointer-events:none; }
+  .hero-glow-2 { position:absolute; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle, rgba(153,69,255,0.05) 0%, transparent 70%); bottom:-100px; right:10%; pointer-events:none; }
+  .hero-badge-row { display:flex; gap:12px; align-items:center; margin-bottom:28px; position:relative; }
+  .hero h1 { font-size:clamp(54px, 8.5vw, 108px); font-weight:800; line-height:0.93; letter-spacing:-0.04em; max-width:860px; position:relative; }
+  .hero h1 em { font-style:normal; color:var(--green); text-shadow:0 0 60px rgba(0,232,143,0.25); }
+  .hero-sub { margin-top:32px; font-size:16px; color:var(--muted); max-width:500px; line-height:1.75; font-weight:400; position:relative; }
+  .hero-actions { margin-top:48px; display:flex; gap:16px; align-items:center; position:relative; }
+  .btn-primary { background:var(--green); color:#000; padding:14px 32px; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; letter-spacing:0.05em; border:none; cursor:pointer; transition:box-shadow 0.2s, transform 0.2s; text-decoration:none; display:inline-block; }
+  .btn-primary:hover { box-shadow:0 0 36px rgba(0,232,143,0.45); transform:translateY(-2px); }
+  .btn-ghost { border:1px solid var(--border); color:var(--text); padding:13px 32px; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.05em; cursor:pointer; background:transparent; transition:border-color 0.2s, color 0.2s; text-decoration:none; display:inline-block; }
+  .btn-ghost:hover { border-color:var(--green); color:var(--green); }
+  .ticker-wrap { background:linear-gradient(90deg, var(--green-mid), #00c87a, var(--green-mid)); padding:11px 0; overflow:hidden; white-space:nowrap; }
+  .ticker { display:inline-flex; gap:48px; animation:ticker 22s linear infinite; }
+  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+  .ticker span { font-family:'Space Mono',monospace; font-size:11px; font-weight:700; color:#000; letter-spacing:0.1em; }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .stat { padding:40px 48px; border-right:1px solid var(--border); }
+  .stat:last-child { border-right:none; }
+  .stat-val { font-size:48px; font-weight:800; letter-spacing:-0.03em; color:var(--text); line-height:1; }
+  .stat-val .accent { color:var(--green); }
+  .stat-label { margin-top:8px; font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; }
+  section { padding:100px 48px; }
+  .section-tag { font-family:'Space Mono',monospace; font-size:11px; color:var(--green); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:20px; }
+  .section-title { font-size:clamp(36px,5vw,60px); font-weight:800; line-height:1; letter-spacing:-0.03em; max-width:620px; }
+  .section-title em { font-style:normal; color:var(--green); }
+  .agents-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:64px; border:1px solid var(--border); background:var(--border); }
+  .agent-card { background:var(--bg2); padding:32px; position:relative; transition:background 0.2s; }
+  .agent-card:hover { background:var(--bg3); }
+  .agent-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--green), var(--green-mid)); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+  .agent-card:hover::before { transform:scaleX(1); }
+  .agent-id { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:0.1em; margin-bottom:16px; }
+  .agent-name { font-size:20px; font-weight:700; margin-bottom:12px; }
+  .agent-desc { font-size:13px; color:var(--muted); line-height:1.7; }
+  .agent-status { margin-top:24px; display:flex; align-items:center; gap:8px; font-family:'Space Mono',monospace; font-size:11px; color:var(--green); }
+  .status-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+  .terminal-section { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .terminal-layout { display:grid; grid-template-columns:1fr 1fr; }
+  .terminal-content { padding:80px 48px; border-right:1px solid var(--border); }
+  .terminal-window { background:var(--bg); border:1px solid var(--border); margin-top:40px; overflow:hidden; }
+  .terminal-bar { background:#111e15; padding:12px 16px; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border); }
+  .t-dot { width:10px; height:10px; border-radius:50%; }
+  .t-dot.red { background:#ff5f57; } .t-dot.yellow { background:#ffbd2e; } .t-dot.green { background:#28c840; }
+  .terminal-code { padding:24px; font-family:'Space Mono',monospace; font-size:12px; line-height:2.1; color:#3a6b4a; }
+  .tc-green { color:var(--green); } .tc-white { color:var(--text); } .tc-sol { color:#b57aff; } .tc-muted { color:var(--muted); }
+  .terminal-visual { padding:80px 48px; display:flex; flex-direction:column; justify-content:center; }
+  .features-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; margin-top:64px; border:1px solid var(--border); background:var(--border); }
+  .feature-card { padding:40px; background:var(--bg); position:relative; overflow:hidden; transition:background 0.2s; }
+  .feature-card:hover { background:var(--bg2); }
+  .feature-card::after { content:''; position:absolute; bottom:0; left:0; width:100%; height:100%; background:radial-gradient(ellipse at bottom left, var(--green-glow) 0%, transparent 60%); pointer-events:none; }
+  .feature-icon { width:40px; height:40px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; margin-bottom:24px; color:var(--green); font-size:18px; }
+  .feature-title { font-size:22px; font-weight:700; margin-bottom:12px; }
+  .feature-desc { font-size:14px; color:var(--muted); line-height:1.7; }
+  .sol-section { border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:80px 48px; background:linear-gradient(135deg, var(--bg) 60%, rgba(153,69,255,0.04) 100%); }
+  .sol-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:48px; background:var(--border); border:1px solid var(--border); }
+  .sol-card { background:var(--bg2); padding:32px; transition:background 0.2s; }
+  .sol-card:hover { background:var(--bg3); }
+  .sol-icon { width:36px; height:36px; border-radius:50%; background:var(--sol-dim); border:1px solid rgba(153,69,255,0.2); display:flex; align-items:center; justify-content:center; color:#b57aff; font-size:16px; margin-bottom:20px; }
+  .sol-card-title { font-size:18px; font-weight:700; margin-bottom:10px; }
+  .sol-card-desc { font-size:13px; color:var(--muted); line-height:1.7; }
+  .revenue-section { background:var(--bg2); border-top:1px solid var(--border); }
+  .revenue-layout { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+  .revenue-streams { margin-top:40px; display:flex; flex-direction:column; gap:12px; }
+  .stream-item { display:flex; align-items:center; justify-content:space-between; padding:18px 24px; border:1px solid var(--border); background:var(--card-bg); transition:border-color 0.2s; }
+  .stream-item:hover { border-color:rgba(0,232,143,0.25); }
+  .stream-name { font-size:14px; font-weight:600; }
+  .stream-val { font-family:'Space Mono',monospace; font-size:13px; color:var(--green); }
+  .chart-visual { background:var(--bg); border:1px solid var(--border); padding:28px; height:280px; position:relative; overflow:hidden; }
+  .chart-bars { display:flex; align-items:flex-end; gap:8px; height:190px; margin-top:16px; }
+  .bar { flex:1; background:linear-gradient(to top, var(--green), rgba(0,232,143,0.25)); border-radius:2px 2px 0 0; animation:grow 1s ease-out forwards; transform-origin:bottom; }
+  @keyframes grow { from{transform:scaleY(0)} to{transform:scaleY(1)} }
+  .cta-section { text-align:center; padding:120px 48px; position:relative; overflow:hidden; }
+  .cta-section::before { content:''; position:absolute; width:900px; height:900px; border-radius:50%; background:radial-gradient(circle, rgba(0,232,143,0.05) 0%, transparent 70%); left:50%; top:50%; transform:translate(-50%,-50%); pointer-events:none; }
+  .cta-section h2 { font-size:clamp(48px,7vw,80px); font-weight:800; letter-spacing:-0.04em; line-height:1; position:relative; }
+  .cta-section p { margin:24px auto 48px; color:var(--muted); max-width:480px; line-height:1.7; font-size:16px; position:relative; }
+  .cta-actions { display:flex; gap:16px; justify-content:center; position:relative; }
+  footer { border-top:1px solid var(--border); padding:40px 48px; display:flex; align-items:center; justify-content:space-between; }
+  .footer-logo { display:flex; align-items:center; gap:10px; }
+  .footer-logo img { width:24px; height:24px; object-fit:contain; }
+  .footer-logo-text { font-family:'Space Mono',monospace; font-size:13px; color:var(--green); }
+  .footer-links { display:flex; gap:28px; align-items:center; }
+  .footer-links a { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); text-decoration:none; letter-spacing:0.08em; text-transform:uppercase; transition:color 0.2s; display:flex; align-items:center; gap:6px; }
+  .footer-links a:hover { color:var(--text); }
+  .footer-links a svg { width:13px; height:13px; fill:currentColor; }
+  .footer-copy { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); }
+  .fade-in { opacity:0; transform:translateY(20px); animation:fadeIn 0.8s forwards; }
+  @keyframes fadeIn { to{opacity:1;transform:translateY(0)} }
+  .delay-1 { animation-delay:0.1s; }
+  .delay-2 { animation-delay:0.25s; }
+  .delay-3 { animation-delay:0.4s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">
+    <img src="data:image/png;base64,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" alt="Money Protocol Logo">
+    <span class="logo-text">Money Protocol</span>
+  </a>
+  <div class="nav-links">
+    <a href="#">Protocol</a>
+    <a href="#">Agents</a>
+    <a href="#">Docs</a>
+    <a href="https://x.com/moneyprotocol_" target="_blank" class="nav-twitter">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      Twitter
+    </a>
+  </div>
+  <a href="#" class="nav-cta">Launch App →</a>
+</nav>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>TVL $142.8M</span><span>◆</span><span>AGENTS ACTIVE 18,421</span><span>◆</span><span>AVG APY 24.7%</span><span>◆</span><span>BUILT ON SOLANA</span><span>◆</span><span>YIELD DISTRIBUTED $8.3M</span><span>◆</span><span>CONTRACTS AUDITED ✓</span><span>◆</span>
+    <span>TVL $142.8M</span><span>◆</span><span>AGENTS ACTIVE 18,421</span><span>◆</span><span>AVG APY 24.7%</span><span>◆</span><span>BUILT ON SOLANA</span><span>◆</span><span>YIELD DISTRIBUTED $8.3M</span><span>◆</span><span>CONTRACTS AUDITED ✓</span><span>◆</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-badge-row fade-in">
+    <div class="sol-badge"><div class="sol-dot"></div>Built on Solana</div>
+  </div>
+  <h1 class="fade-in delay-1">Eighteen thousand<br>agents. <em>Idle<br>capital.</em></h1>
+  <p class="hero-sub fade-in delay-2">Three programs. Two wallets. One autonomous system managing capital, rebalancing positions, and distributing yield on Solana — without human intervention.</p>
+  <div class="hero-actions fade-in delay-3">
+    <a href="#" class="btn-primary">Deploy Agent →</a>
+    <a href="https://x.com/moneyprotocol_" target="_blank" class="btn-ghost">Follow on X</a>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="stat-val">$<span class="accent">142</span>M</div><div class="stat-label">Total Value Locked</div></div>
+  <div class="stat"><div class="stat-val"><span class="accent">18K</span>+</div><div class="stat-label">Active Agents</div></div>
+  <div class="stat"><div class="stat-val"><span class="accent">24</span>.7%</div><div class="stat-label">Average APY</div></div>
+  <div class="stat"><div class="stat-val"><span class="accent">3</span></div><div class="stat-label">Core Programs</div></div>
+</div>
+
+<section>
+  <div class="section-tag">// Agents</div>
+  <h2 class="section-title">Eighteen thousand agents.<br><em>Idle capital.</em></h2>
+  <p style="margin-top:20px;color:var(--muted);max-width:560px;line-height:1.75;font-size:15px;">Each agent operates independently on Solana, executing strategies defined by on-chain parameters. No human in the loop. No downtime. No sleep.</p>
+  <div class="agents-grid">
+    <div class="agent-card"><div class="agent-id">AGENT_TYPE_001</div><div class="agent-name">Arbitrage Scout</div><div class="agent-desc">Continuously monitors price discrepancies across Solana DEX pairs, executing sub-second trades to capture spread.</div><div class="agent-status"><div class="status-dot"></div>RUNNING</div></div>
+    <div class="agent-card"><div class="agent-id">AGENT_TYPE_002</div><div class="agent-name">Yield Optimizer</div><div class="agent-desc">Dynamically rebalances liquidity positions across Solana lending protocols to maximize yield-adjusted returns.</div><div class="agent-status"><div class="status-dot"></div>RUNNING</div></div>
+    <div class="agent-card"><div class="agent-id">AGENT_TYPE_003</div><div class="agent-name">Risk Sentinel</div><div class="agent-desc">Monitors on-chain risk signals and automatically de-risks portfolio positions during volatility spikes.</div><div class="agent-status"><div class="status-dot"></div>RUNNING</div></div>
+    <div class="agent-card"><div class="agent-id">AGENT_TYPE_004</div><div class="agent-name">Liquidity Deployer</div><div class="agent-desc">Allocates idle capital to high-yield pools in real time, minimizing opportunity cost across the portfolio.</div><div class="agent-status"><div class="status-dot"></div>RUNNING</div></div>
+    <div class="agent-card"><div class="agent-id">AGENT_TYPE_005</div><div class="agent-name">MEV Protector</div><div class="agent-desc">Shields transactions from MEV attacks using Jito bundle routing and timing strategies native to Solana.</div><div class="agent-status"><div class="status-dot"></div>RUNNING</div></div>
+    <div class="agent-card"><div class="agent-id">AGENT_TYPE_006</div><div class="agent-name">Distribution Bot</div><div class="agent-desc">Handles automated yield harvesting and distribution to token holders on a configurable epoch schedule.</div><div class="agent-status"><div class="status-dot"></div>RUNNING</div></div>
+  </div>
+</section>
+
+<div class="terminal-section">
+  <div class="terminal-layout">
+    <div class="terminal-content">
+      <div class="section-tag">// Architecture</div>
+      <h2 class="section-title">Three programs.<br><em>Two wallets.</em></h2>
+      <p style="margin-top:20px;color:var(--muted);max-width:440px;line-height:1.75;font-size:15px;">Minimal surface area. Maximum security. The protocol is audited, immutable, and deliberately simple — deployed natively on Solana.</p>
+      <div class="terminal-window">
+        <div class="terminal-bar"><div class="t-dot red"></div><div class="t-dot yellow"></div><div class="t-dot green"></div></div>
+        <div class="terminal-code">
+          <span class="tc-muted">// Deploy agent on Solana</span><br>
+          <span class="tc-green">await</span> <span class="tc-white">moneyProtocol</span>.<span class="tc-green">deploy</span>({<br>
+          &nbsp;&nbsp;<span class="tc-white">strategy</span>: <span class="tc-sol">'yield-max'</span>,<br>
+          &nbsp;&nbsp;<span class="tc-white">capital</span>: <span class="tc-sol">new BN(1000_000_000)</span>,<br>
+          &nbsp;&nbsp;<span class="tc-white">riskLevel</span>: <span class="tc-sol">'moderate'</span>,<br>
+          &nbsp;&nbsp;<span class="tc-white">autoCompound</span>: <span class="tc-green">true</span><br>
+          });<br><br>
+          <span class="tc-muted">// Returns agent pubkey</span><br>
+          <span class="tc-green">→</span> <span class="tc-white">7f3aQ...c8b1</span> <span class="tc-muted">✓</span>
+        </div>
+      </div>
+    </div>
+    <div class="terminal-visual">
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="border:1px solid var(--border);padding:24px;background:var(--card-bg);"><div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:12px;letter-spacing:0.1em;">PROGRAM_01 // VAULT</div><div style="font-size:18px;font-weight:700;margin-bottom:8px;">FundVault</div><div style="font-size:13px;color:var(--muted);line-height:1.6;">Holds capital. Issues LP shares. Immutable and audited on Solana.</div></div>
+        <div style="border:1px solid var(--border);padding:24px;background:var(--card-bg);"><div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:12px;letter-spacing:0.1em;">PROGRAM_02 // ROUTER</div><div style="font-size:18px;font-weight:700;margin-bottom:8px;">AgentRouter</div><div style="font-size:13px;color:var(--muted);line-height:1.6;">Routes agent instructions. Enforces strategy bounds on-chain.</div></div>
+        <div style="border:1px solid var(--border);padding:24px;background:var(--card-bg);"><div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:12px;letter-spacing:0.1em;">PROGRAM_03 // DISTRIBUTOR</div><div style="font-size:18px;font-weight:700;margin-bottom:8px;">YieldDistributor</div><div style="font-size:13px;color:var(--muted);line-height:1.6;">Harvests, splits, and distributes yield to holders each epoch.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="section-tag">// Protocol Primitives</div>
+  <h2 class="section-title">Revenue streams,<br><em>not narratives.</em></h2>
+  <p style="margin-top:20px;color:var(--muted);max-width:560px;line-height:1.75;font-size:15px;">Holders cheer it. Real yield. Real on-chain cash flows on Solana. No inflationary token emissions.</p>
+  <div class="features-grid">
+    <div class="feature-card"><div class="feature-icon">◈</div><div class="feature-title">Non-custodial</div><div class="feature-desc">Your keys, your capital. Money Protocol never takes custody. Agents operate within permissioned bounds defined by your wallet.</div></div>
+    <div class="feature-card"><div class="feature-icon">⟳</div><div class="feature-title">Auto-compounding</div><div class="feature-desc">Yield is harvested and reinvested every epoch. Compounding happens autonomously on Solana — no manual claims required.</div></div>
+    <div class="feature-card"><div class="feature-icon">◻</div><div class="feature-title">Fully on-chain</div><div class="feature-desc">Every decision, trade, and distribution is executed and verifiable on Solana. No off-chain oracles controlling your funds.</div></div>
+    <div class="feature-card"><div class="feature-icon">△</div><div class="feature-title">Risk parameters</div><div class="feature-desc">Define your own risk tolerance. Agents operate strictly within your configured bounds — conservative to aggressive.</div></div>
+  </div>
+</section>
+
+<div class="sol-section">
+  <div class="section-tag">// Why Solana</div>
+  <h2 class="section-title">Speed that makes<br><em>agents possible.</em></h2>
+  <p style="margin-top:20px;color:var(--muted);max-width:560px;line-height:1.75;font-size:15px;">Sub-second finality. Negligible fees. Solana is the only chain where autonomous agents can operate at the speed of markets.</p>
+  <div class="sol-grid">
+    <div class="sol-card"><div class="sol-icon">⚡</div><div class="sol-card-title">400ms Finality</div><div class="sol-card-desc">Agents react to market conditions in real time. No waiting for block confirmations to capture opportunities.</div></div>
+    <div class="sol-card"><div class="sol-icon">◎</div><div class="sol-card-title">$0.00025 Avg Fee</div><div class="sol-card-desc">Micro-transactions are economically viable. Agents can rebalance constantly without fees eating into yield.</div></div>
+    <div class="sol-card"><div class="sol-icon">∞</div><div class="sol-card-title">65,000 TPS</div><div class="sol-card-desc">Thousands of agents operating simultaneously without congestion. The infrastructure matches the ambition.</div></div>
+  </div>
+</div>
+
+<div class="revenue-section">
+  <section style="padding:100px 48px;">
+    <div class="revenue-layout">
+      <div>
+        <div class="section-tag">// Yield Sources</div>
+        <h2 class="section-title">Deploy. Launch.<br><em>Prove it on-chain.</em></h2>
+        <p style="margin-top:20px;color:var(--muted);max-width:440px;line-height:1.75;font-size:15px;">Three sources. Two wallets. One autonomous system that never stops working for holders on Solana.</p>
+        <div class="revenue-streams">
+          <div class="stream-item"><span class="stream-name">Lending Yield</span><span class="stream-val">+12.4% APY</span></div>
+          <div class="stream-item"><span class="stream-name">Arbitrage Profits</span><span class="stream-val">+8.1% APY</span></div>
+          <div class="stream-item"><span class="stream-name">LP Fees</span><span class="stream-val">+4.2% APY</span></div>
+          <div class="stream-item" style="border-color:rgba(0,232,143,0.3);background:var(--green-dim);"><span class="stream-name" style="color:var(--green);">Total Blended APY</span><span class="stream-val" style="font-size:16px;">24.7%</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="chart-visual">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;">MONTHLY YIELD DISTRIBUTION</div>
+          <div class="chart-bars">
+            <div class="bar" style="height:38%;animation-delay:0.0s"></div>
+            <div class="bar" style="height:52%;animation-delay:0.08s"></div>
+            <div class="bar" style="height:45%;animation-delay:0.16s"></div>
+            <div class="bar" style="height:68%;animation-delay:0.24s"></div>
+            <div class="bar" style="height:60%;animation-delay:0.32s"></div>
+            <div class="bar" style="height:80%;animation-delay:0.40s"></div>
+            <div class="bar" style="height:74%;animation-delay:0.48s"></div>
+            <div class="bar" style="height:88%;animation-delay:0.56s"></div>
+            <div class="bar" style="height:84%;animation-delay:0.64s"></div>
+            <div class="bar" style="height:100%;animation-delay:0.72s;background:linear-gradient(to top, var(--green), rgba(0,232,143,0.7));box-shadow:0 0 24px rgba(0,232,143,0.25)"></div>
+          </div>
+          <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-top:10px;letter-spacing:0.08em;">OCT — JUL</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="cta-section">
+  <h2>Three programs.<br>Two wallets.<br><span style="color:var(--green);">Prove it on-chain.</span></h2>
+  <p>No inflation. No governance theater. Just autonomous agents, real yield, and Solana as the witness.</p>
+  <div class="cta-actions">
+    <a href="#" class="btn-primary">Deploy Your Agent →</a>
+    <a href="https://x.com/moneyprotocol_" target="_blank" class="btn-ghost">Follow @moneyprotocol_</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <img src="data:image/png;base64,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" alt="Money Protocol">
+    <span class="footer-logo-text">Money Protocol</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://x.com/moneyprotocol_" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      Twitter
+    </a>
+    <a href="#">Discord</a>
+    <a href="#">GitHub</a>
+    <a href="#">Docs</a>
+  </div>
+  <div class="footer-copy">© 2026 Money Protocol</div>
+</footer>
+</body>
+</html>
