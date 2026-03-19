@@ -159,25 +159,52 @@
   .delay-1 { animation-delay:0.1s; }
   .delay-2 { animation-delay:0.25s; }
   .delay-3 { animation-delay:0.4s; }
+
+  /* CUSTOM CURSOR */
+  * { cursor: none !important; }
+  #cursor-dot {
+    width: 8px; height: 8px;
+    background: #00e88f;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s ease;
+    box-shadow: 0 0 10px rgba(0,232,143,0.8);
+  }
+  #cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid rgba(0,232,143,0.5);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, border-color 0.2s;
+  }
+  #cursor-dot.clicking { transform: translate(-50%,-50%) scale(0.4); }
+  #cursor-ring.clicking { width: 52px; height: 52px; border-color: rgba(0,232,143,0.9); }
+  #cursor-ring.hovering { width: 52px; height: 52px; border-color: var(--green); background: rgba(0,232,143,0.05); }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="#" class="logo">
+  <a href="#hero" class="logo">
     <img src="data:image/png;base64,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" alt="Money Protocol Logo">
     <span class="logo-text">Money Protocol</span>
   </a>
   <div class="nav-links">
-    <a href="#">Protocol</a>
-    <a href="#">Agents</a>
-    <a href="#">Docs</a>
-    <a href="https://x.com/moneyprotocol_" target="_blank" class="nav-twitter">
+    <a href="#protocol">Protocol</a>
+    <a href="#agents">Agents</a>
+    <a href="#solana">Why Solana</a>
+    <a href="https://x.com/MoneyProt" target="_blank" class="nav-twitter">
       <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      Twitter
+      @MoneyProt
     </a>
   </div>
-  <a href="#" class="nav-cta">Launch App →</a>
+  <a href="https://x.com/MoneyProt" target="_blank" class="nav-cta">Follow on X →</a>
 </nav>
 
 <div class="ticker-wrap">
@@ -187,7 +214,7 @@
   </div>
 </div>
 
-<section class="hero">
+<section class="hero" id="hero">
   <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
   <div class="hero-glow-2"></div>
@@ -198,7 +225,7 @@
   <p class="hero-sub fade-in delay-2">Three programs. Two wallets. One autonomous system managing capital, rebalancing positions, and distributing yield on Solana — without human intervention.</p>
   <div class="hero-actions fade-in delay-3">
     <a href="#" class="btn-primary">Deploy Agent →</a>
-    <a href="https://x.com/moneyprotocol_" target="_blank" class="btn-ghost">Follow on X</a>
+    <a href="https://x.com/MoneyProt" target="_blank" class="btn-ghost">Follow @MoneyProt</a>
   </div>
 </section>
 
@@ -209,8 +236,7 @@
   <div class="stat"><div class="stat-val"><span class="accent">3</span></div><div class="stat-label">Core Programs</div></div>
 </div>
 
-<section>
-  <div class="section-tag">// Agents</div>
+<section id="agents">
   <h2 class="section-title">Eighteen thousand agents.<br><em>Idle capital.</em></h2>
   <p style="margin-top:20px;color:var(--muted);max-width:560px;line-height:1.75;font-size:15px;">Each agent operates independently on Solana, executing strategies defined by on-chain parameters. No human in the loop. No downtime. No sleep.</p>
   <div class="agents-grid">
@@ -223,7 +249,7 @@
   </div>
 </section>
 
-<div class="terminal-section">
+<div class="terminal-section" id="protocol">
   <div class="terminal-layout">
     <div class="terminal-content">
       <div class="section-tag">// Architecture</div>
@@ -266,7 +292,7 @@
   </div>
 </section>
 
-<div class="sol-section">
+<div class="sol-section" id="solana">
   <div class="section-tag">// Why Solana</div>
   <h2 class="section-title">Speed that makes<br><em>agents possible.</em></h2>
   <p style="margin-top:20px;color:var(--muted);max-width:560px;line-height:1.75;font-size:15px;">Sub-second finality. Negligible fees. Solana is the only chain where autonomous agents can operate at the speed of markets.</p>
@@ -318,7 +344,7 @@
   <p>No inflation. No governance theater. Just autonomous agents, real yield, and Solana as the witness.</p>
   <div class="cta-actions">
     <a href="#" class="btn-primary">Deploy Your Agent →</a>
-    <a href="https://x.com/moneyprotocol_" target="_blank" class="btn-ghost">Follow @moneyprotocol_</a>
+    <a href="https://x.com/MoneyProt" target="_blank" class="btn-ghost">Follow @MoneyProt</a>
   </div>
 </section>
 
@@ -328,7 +354,7 @@
     <span class="footer-logo-text">Money Protocol</span>
   </div>
   <div class="footer-links">
-    <a href="https://x.com/moneyprotocol_" target="_blank">
+    <a href="https://x.com/MoneyProt" target="_blank">
       <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       Twitter
     </a>
@@ -338,5 +364,45 @@
   </div>
   <div class="footer-copy">© 2026 Money Protocol</div>
 </footer>
+
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<script>
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let ringX = 0, ringY = 0, mouseX = 0, mouseY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.left = mouseX + 'px';
+    dot.style.top = mouseY + 'px';
+  });
+
+  // Ring follows with lag
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.addEventListener('mousedown', () => {
+    dot.classList.add('clicking');
+    ring.classList.add('clicking');
+  });
+  document.addEventListener('mouseup', () => {
+    dot.classList.remove('clicking');
+    ring.classList.remove('clicking');
+  });
+
+  // Hover effect on interactive elements
+  document.querySelectorAll('a, button, .agent-card, .feature-card, .sol-card, .stream-item').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
+  });
+</script>
 </body>
 </html>
