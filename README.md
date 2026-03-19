@@ -1,3 +1,4 @@
+[README (1).md](https://github.com/user-attachments/files/26121083/README.1.md)
 # Money Protocol
 
 > Autonomous Treasury Management for AI Agent Balances on Solana
@@ -15,7 +16,7 @@ Money Protocol is an autonomous DeFi system built on Solana. Three programs. Two
 
 Idle capital is put to work. Holders cheer it. The agent runs the fund.
 
-🌐 [Website](https://moneyprot.xyz) · 📄 [Whitepaper](#) · 🐦 [Twitter](https://x.com/MoneyProt) · ✈️ [Telegram](#)
+🌐 [Website](https://moneyprot.xyz) · 📄 [Whitepaper](#) · 🐦 [Twitter](https://x.com/MoneyProt) · ✈️ [Telegram](https://t.me/moneyprot)
 
 ---
 
