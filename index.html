@@ -186,6 +186,69 @@
   #cursor-dot.clicking { transform: translate(-50%,-50%) scale(0.4); }
   #cursor-ring.clicking { width: 52px; height: 52px; border-color: rgba(0,232,143,0.9); }
   #cursor-ring.hovering { width: 52px; height: 52px; border-color: var(--green); background: rgba(0,232,143,0.05); }
+
+  /* ROADMAP */
+  .roadmap-section { padding:100px 48px; border-top:1px solid var(--border); }
+  .roadmap-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin-top:64px; border:1px solid var(--border); background:var(--border); }
+  .roadmap-card { background:var(--bg2); padding:32px; position:relative; }
+  .roadmap-card.active { background:var(--bg3); }
+  .roadmap-card.active::before { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:linear-gradient(90deg,var(--green),var(--green-mid)); }
+  .roadmap-phase { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:12px; }
+  .roadmap-title { font-size:18px; font-weight:700; margin-bottom:16px; }
+  .roadmap-items { list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .roadmap-items li { font-size:13px; color:var(--muted); display:flex; align-items:flex-start; gap:10px; line-height:1.5; }
+  .roadmap-items li::before { content:'◆'; color:var(--green); font-size:8px; margin-top:4px; flex-shrink:0; }
+  .roadmap-items li.done { color:var(--text); }
+  .roadmap-items li.done::before { content:'✓'; color:var(--green); font-size:10px; }
+  .roadmap-status { margin-top:24px; font-family:'Space Mono',monospace; font-size:11px; }
+  .roadmap-status.live { color:var(--green); display:flex; align-items:center; gap:6px; }
+  .roadmap-status.upcoming { color:var(--muted); }
+
+  /* TOKENOMICS */
+  .token-section { padding:100px 48px; background:var(--bg2); border-top:1px solid var(--border); }
+  .token-layout { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; margin-top:64px; }
+  .token-chart { position:relative; width:280px; height:280px; margin:0 auto; }
+  .token-chart svg { width:100%; height:100%; }
+  .token-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; }
+  .token-center-val { font-size:28px; font-weight:800; color:var(--green); }
+  .token-center-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:0.1em; }
+  .token-list { display:flex; flex-direction:column; gap:12px; }
+  .token-item { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border:1px solid var(--border); background:var(--card-bg); }
+  .token-item-left { display:flex; align-items:center; gap:12px; }
+  .token-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .token-name { font-size:14px; font-weight:600; }
+  .token-pct { font-family:'Space Mono',monospace; font-size:14px; color:var(--green); font-weight:700; }
+  .token-supply { margin-top:32px; padding:20px 24px; border:1px solid rgba(0,232,143,0.2); background:var(--green-dim); display:flex; justify-content:space-between; align-items:center; }
+  .token-supply-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; }
+  .token-supply-val { font-size:22px; font-weight:800; color:var(--green); }
+
+  /* WHITEPAPER */
+  .wp-section { padding:80px 48px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:linear-gradient(135deg, var(--bg) 60%, rgba(153,69,255,0.03)); }
+  .wp-layout { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+  .wp-doc { border:1px solid var(--border); background:var(--bg2); overflow:hidden; }
+  .wp-doc-header { background:#111e15; padding:16px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .wp-doc-title { font-family:'Space Mono',monospace; font-size:12px; color:var(--green); letter-spacing:0.06em; }
+  .wp-doc-body { padding:28px; }
+  .wp-doc-line { height:8px; background:var(--border); margin-bottom:12px; border-radius:2px; }
+  .wp-doc-line.short { width:60%; }
+  .wp-doc-line.medium { width:80%; }
+  .wp-doc-line.long { width:100%; }
+  .wp-doc-line.green { background:rgba(0,232,143,0.15); }
+  .wp-btn { display:inline-flex; align-items:center; gap:10px; background:var(--green); color:#000; padding:14px 28px; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; letter-spacing:0.05em; text-decoration:none; margin-top:32px; transition:box-shadow 0.2s, transform 0.2s; }
+  .wp-btn:hover { box-shadow:0 0 28px rgba(0,232,143,0.4); transform:translateY(-2px); }
+  .wp-btn svg { width:16px; height:16px; fill:currentColor; }
+
+  /* COMMUNITY */
+  .community-section { padding:80px 48px; border-top:1px solid var(--border); }
+  .community-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:48px; border:1px solid var(--border); background:var(--border); }
+  .community-card { background:var(--bg2); padding:36px; display:flex; flex-direction:column; gap:16px; transition:background 0.2s; text-decoration:none; color:var(--text); }
+  .community-card:hover { background:var(--bg3); }
+  .community-card::before { display:none; }
+  .comm-icon { width:44px; height:44px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:20px; }
+  .comm-name { font-size:20px; font-weight:700; }
+  .comm-desc { font-size:13px; color:var(--muted); line-height:1.7; }
+  .comm-link { font-family:'Space Mono',monospace; font-size:11px; color:var(--green); letter-spacing:0.08em; margin-top:auto; display:flex; align-items:center; gap:6px; }
+  .comm-link::after { content:'→'; }
 </style>
 </head>
 <body>
@@ -198,11 +261,15 @@
   <div class="nav-links">
     <a href="#protocol">Protocol</a>
     <a href="#agents">Agents</a>
-    <a href="#solana">Why Solana</a>
+    <a href="#tokenomics">Token</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#whitepaper">Whitepaper</a>
+    <a href="https://github.com" target="_blank">GitHub</a>
     <a href="https://x.com/MoneyProt" target="_blank" class="nav-twitter">
       <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      @MoneyProt
+      X
     </a>
+    <a href="https://t.me" target="_blank">Telegram</a>
   </div>
   <a href="https://x.com/MoneyProt" target="_blank" class="nav-cta">Follow on X →</a>
 </nav>
@@ -339,6 +406,189 @@
   </section>
 </div>
 
+
+<!-- ROADMAP -->
+<section class="roadmap-section" id="roadmap">
+  <div class="section-tag">// Roadmap</div>
+  <h2 class="section-title">Building in public.<br><em>On-chain.</em></h2>
+  <p style="margin-top:20px;color:var(--muted);max-width:560px;line-height:1.75;font-size:15px;">Every milestone is public. Every deployment is verifiable. No vaporware.</p>
+  <div class="roadmap-grid">
+    <div class="roadmap-card active">
+      <div class="roadmap-phase">Phase 01 — Q1 2026</div>
+      <div class="roadmap-title">Genesis</div>
+      <ul class="roadmap-items">
+        <li class="done">Protocol architecture design</li>
+        <li class="done">Website & brand launch</li>
+        <li class="done">Twitter community launch</li>
+        <li>Smart contract development</li>
+        <li>Security audit begin</li>
+      </ul>
+      <div class="roadmap-status live"><div class="status-dot"></div>IN PROGRESS</div>
+    </div>
+    <div class="roadmap-card">
+      <div class="roadmap-phase">Phase 02 — Q2 2026</div>
+      <div class="roadmap-title">Testnet</div>
+      <ul class="roadmap-items">
+        <li>Devnet deployment</li>
+        <li>Agent framework v1</li>
+        <li>Public testnet launch</li>
+        <li>Bug bounty program</li>
+        <li>Audit completion</li>
+      </ul>
+      <div class="roadmap-status upcoming">UPCOMING</div>
+    </div>
+    <div class="roadmap-card">
+      <div class="roadmap-phase">Phase 03 — Q3 2026</div>
+      <div class="roadmap-title">Mainnet</div>
+      <ul class="roadmap-items">
+        <li>Mainnet deployment</li>
+        <li>Token generation event</li>
+        <li>DEX listing</li>
+        <li>Agent marketplace v1</li>
+        <li>Yield distribution live</li>
+      </ul>
+      <div class="roadmap-status upcoming">UPCOMING</div>
+    </div>
+    <div class="roadmap-card">
+      <div class="roadmap-phase">Phase 04 — Q4 2026</div>
+      <div class="roadmap-title">Scale</div>
+      <ul class="roadmap-items">
+        <li>Cross-chain bridges</li>
+        <li>Agent SDK public</li>
+        <li>DAO governance live</li>
+        <li>10,000+ active agents</li>
+        <li>CEX listings</li>
+      </ul>
+      <div class="roadmap-status upcoming">UPCOMING</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOKENOMICS -->
+<section class="token-section" id="tokenomics">
+  <div class="section-tag">// Tokenomics</div>
+  <h2 class="section-title">$MONEY token.<br><em>Real utility.</em></h2>
+  <p style="margin-top:20px;color:var(--muted);max-width:560px;line-height:1.75;font-size:15px;">No inflationary emissions. No VC dumps. A fixed supply designed for long-term protocol alignment.</p>
+  <div class="token-layout">
+    <div>
+      <div class="token-chart">
+        <svg viewBox="0 0 200 200">
+          <!-- Donut slices -->
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#0b110d" stroke-width="40"/>
+          <!-- Community 40% -->
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#00e88f" stroke-width="40"
+            stroke-dasharray="201 301" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+          <!-- Team 15% -->
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#00a86b" stroke-width="40"
+            stroke-dasharray="75 427" stroke-dashoffset="-201" transform="rotate(-90 100 100)"/>
+          <!-- Treasury 20% -->
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#9945FF" stroke-width="40"
+            stroke-dasharray="100 402" stroke-dashoffset="-276" transform="rotate(-90 100 100)"/>
+          <!-- Liquidity 15% -->
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#b57aff" stroke-width="40"
+            stroke-dasharray="75 427" stroke-dashoffset="-376" transform="rotate(-90 100 100)"/>
+          <!-- Advisors 10% -->
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#1a3a28" stroke-width="40"
+            stroke-dasharray="50 452" stroke-dashoffset="-451" transform="rotate(-90 100 100)"/>
+        </svg>
+        <div class="token-center">
+          <div class="token-center-val">1B</div>
+          <div class="token-center-label">TOTAL SUPPLY</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="token-list">
+        <div class="token-item"><div class="token-item-left"><div class="token-dot" style="background:#00e88f"></div><span class="token-name">Community & Ecosystem</span></div><span class="token-pct">40%</span></div>
+        <div class="token-item"><div class="token-item-left"><div class="token-dot" style="background:#9945FF"></div><span class="token-name">Treasury</span></div><span class="token-pct">20%</span></div>
+        <div class="token-item"><div class="token-item-left"><div class="token-dot" style="background:#00a86b"></div><span class="token-name">Team (2yr vesting)</span></div><span class="token-pct">15%</span></div>
+        <div class="token-item"><div class="token-item-left"><div class="token-dot" style="background:#b57aff"></div><span class="token-name">Liquidity</span></div><span class="token-pct">15%</span></div>
+        <div class="token-item"><div class="token-item-left"><div class="token-dot" style="background:#1a3a28"></div><span class="token-name">Advisors (1yr vesting)</span></div><span class="token-pct">10%</span></div>
+      </div>
+      <div class="token-supply">
+        <div>
+          <div class="token-supply-label">Total Supply</div>
+          <div class="token-supply-val">1,000,000,000 $MONEY</div>
+        </div>
+        <div style="text-align:right">
+          <div class="token-supply-label">Chain</div>
+          <div style="font-size:16px;font-weight:700;color:#b57aff;margin-top:4px;">Solana</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHITEPAPER -->
+<div class="wp-section" id="whitepaper">
+  <div class="wp-layout">
+    <div>
+      <div class="section-tag">// Whitepaper</div>
+      <h2 class="section-title">Read the<br><em>full thesis.</em></h2>
+      <p style="margin-top:20px;color:var(--muted);max-width:440px;line-height:1.75;font-size:15px;">
+        The Money Protocol whitepaper covers the full architecture — agent design, yield mechanics, risk parameters, tokenomics, and the long-term vision for autonomous DeFi on Solana.
+      </p>
+      <a href="#" class="wp-btn">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+        Download Whitepaper
+      </a>
+    </div>
+    <div class="wp-doc">
+      <div class="wp-doc-header">
+        <span class="wp-doc-title">money_protocol_whitepaper_v1.pdf</span>
+        <span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);">48 pages</span>
+      </div>
+      <div class="wp-doc-body">
+        <div class="wp-doc-line green" style="width:50%;margin-bottom:20px;height:12px;"></div>
+        <div class="wp-doc-line long"></div>
+        <div class="wp-doc-line medium"></div>
+        <div class="wp-doc-line long"></div>
+        <div class="wp-doc-line short"></div>
+        <div style="height:16px;"></div>
+        <div class="wp-doc-line long"></div>
+        <div class="wp-doc-line medium"></div>
+        <div class="wp-doc-line long"></div>
+        <div class="wp-doc-line long"></div>
+        <div class="wp-doc-line short"></div>
+        <div style="height:16px;"></div>
+        <div class="wp-doc-line green" style="width:40%;"></div>
+        <div style="height:8px;"></div>
+        <div class="wp-doc-line long"></div>
+        <div class="wp-doc-line medium"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMUNITY -->
+<section class="community-section">
+  <div class="section-tag">// Community</div>
+  <h2 class="section-title">Join the<br><em>protocol.</em></h2>
+  <div class="community-grid">
+    <a href="https://x.com/MoneyProt" target="_blank" class="community-card">
+      <div class="comm-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#00e88f"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </div>
+      <div class="comm-name">Twitter / X</div>
+      <div class="comm-desc">Follow for protocol updates, agent metrics, and yield reports. Building in public.</div>
+      <div class="comm-link">@MoneyProt</div>
+    </a>
+    <a href="https://t.me" target="_blank" class="community-card">
+      <div class="comm-icon" style="color:#00e88f;font-size:22px;">✈</div>
+      <div class="comm-name">Telegram</div>
+      <div class="comm-desc">Join the community. Get alpha, ask questions, and connect with other holders and builders.</div>
+      <div class="comm-link">Coming soon</div>
+    </a>
+    <a href="https://github.com" target="_blank" class="community-card">
+      <div class="comm-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#00e88f"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      </div>
+      <div class="comm-name">GitHub</div>
+      <div class="comm-desc">Open source. Audit the code, contribute to the protocol, or build on top of it.</div>
+      <div class="comm-link">Coming soon</div>
+    </a>
+  </div>
+</section>
 <section class="cta-section">
   <h2>Three programs.<br>Two wallets.<br><span style="color:var(--green);">Prove it on-chain.</span></h2>
   <p>No inflation. No governance theater. Just autonomous agents, real yield, and Solana as the witness.</p>
