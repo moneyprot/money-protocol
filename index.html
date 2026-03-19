@@ -249,6 +249,167 @@
   .comm-desc { font-size:13px; color:var(--muted); line-height:1.7; }
   .comm-link { font-family:'Space Mono',monospace; font-size:11px; color:var(--green); letter-spacing:0.08em; margin-top:auto; display:flex; align-items:center; gap:6px; }
   .comm-link::after { content:'→'; }
+
+  /* DEMO SECTION */
+  .demo-section { padding:80px 48px; border-top:1px solid var(--border); background:var(--bg2); }
+  .demo-frame-wrap { margin-top:48px; border:1px solid var(--border); overflow:hidden; position:relative; }
+  .demo-frame-bar { background:#111e15; padding:12px 16px; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border); }
+  .demo-frame-url { font-family:"Space Mono",monospace; font-size:11px; color:var(--muted); margin-left:12px; }
+  .demo-inner { background:var(--bg); }
+
+  /* INLINE DEMO STYLES */
+
+:root {
+  --bg: #080c0a;
+  --bg2: #0b110d;
+  --bg3: #0f1811;
+  --green: #00e88f;
+  --green-mid: #00a86b;
+  --green-dim: rgba(0,232,143,0.1);
+  --sol: #9945FF;
+  --text: #dff0e8;
+  --muted: #3d6050;
+  --border: rgba(0,232,143,0.1);
+  --card: rgba(255,255,255,0.025);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Syne',sans-serif; min-height:100vh; }
+
+/* TOPBAR */
+.topbar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 32px; border-bottom:1px solid var(--border);
+  background:rgba(8,12,10,0.95); backdrop-filter:blur(12px);
+  position:sticky; top:0; z-index:100;
+}
+.topbar-logo { display:flex; align-items:center; gap:8px; text-decoration:none; }
+.topbar-logo span { font-family:'Space Mono',monospace; font-size:14px; color:var(--green); }
+.topbar-right { display:flex; align-items:center; gap:12px; }
+.badge { display:flex; align-items:center; gap:6px; padding:6px 14px; border:1px solid var(--border); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.08em; }
+.badge.devnet { color:#ffbd2e; border-color:rgba(255,189,46,0.2); background:rgba(255,189,46,0.05); }
+.badge.wallet { color:var(--green); border-color:var(--border); }
+.live-dot { width:6px; height:6px; border-radius:50%; background:#ffbd2e; box-shadow:0 0 6px #ffbd2e; animation:pulse 2s infinite; }
+.live-dot.green { background:var(--green); box-shadow:0 0 6px var(--green); }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.back-btn { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); text-decoration:none; letter-spacing:0.08em; transition:color 0.2s; }
+.back-btn:hover { color:var(--green); }
+
+/* HERO DEMO */
+.demo-hero {
+  padding:60px 32px 40px;
+  border-bottom:1px solid var(--border);
+  position:relative; overflow:hidden;
+}
+.demo-hero::before {
+  content:''; position:absolute; inset:0;
+  background-image: linear-gradient(var(--border) 1px,transparent 1px), linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse 80% 100% at 20% 50%, black, transparent);
+}
+.demo-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--green); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.demo-label::before { content:''; width:24px; height:1px; background:var(--green); }
+.demo-hero h1 { font-size:clamp(36px,5vw,64px); font-weight:800; line-height:1; letter-spacing:-0.03em; position:relative; }
+.demo-hero h1 em { font-style:normal; color:var(--green); }
+.demo-hero p { margin-top:16px; font-family:'Space Mono',monospace; font-size:12px; color:var(--muted); position:relative; }
+
+/* MAIN LAYOUT */
+.app { display:grid; grid-template-columns:1fr 320px; gap:0; min-height:calc(100vh - 200px); }
+
+/* TABS */
+.tabs { display:flex; border-bottom:1px solid var(--border); padding:0 32px; background:var(--bg2); }
+.tab { padding:16px 24px; font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; transition:all 0.2s; }
+.tab.active { color:var(--green); border-bottom-color:var(--green); }
+.tab:hover { color:var(--text); }
+
+/* LEFT PANEL */
+.left-panel { border-right:1px solid var(--border); }
+.left-inner { padding:28px 32px; }
+
+/* STATS ROW */
+.stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); margin-bottom:24px; }
+.stat-box { background:var(--bg2); padding:20px 20px; }
+.stat-box-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px; }
+.stat-box-val { font-size:24px; font-weight:800; color:var(--green); line-height:1; }
+.stat-box-sub { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:6px; }
+.stat-box-sub.up { color:#00e88f; }
+
+/* CHART */
+.chart-container { border:1px solid var(--border); background:var(--bg2); padding:24px; margin-bottom:24px; position:relative; }
+.chart-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.chart-title { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:0.1em; }
+.chart-toggles { display:flex; gap:8px; }
+.chart-toggle { padding:4px 12px; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.08em; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.2s; }
+.chart-toggle.active { background:var(--green-dim); border-color:var(--green); color:var(--green); }
+.chart-svg { width:100%; height:160px; }
+
+/* AGENTS TABLE */
+.agents-table { border:1px solid var(--border); overflow:hidden; }
+.agents-table-header { display:grid; grid-template-columns:2fr 1fr 1fr 1fr 80px; padding:12px 20px; background:#111e15; border-bottom:1px solid var(--border); }
+.agents-table-header span { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; }
+.agent-row { display:grid; grid-template-columns:2fr 1fr 1fr 1fr 80px; padding:16px 20px; border-bottom:1px solid var(--border); align-items:center; transition:background 0.15s; }
+.agent-row:last-child { border-bottom:none; }
+.agent-row:hover { background:var(--bg3); }
+.agent-row-name { display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; }
+.agent-row-id { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); display:block; margin-top:2px; }
+.agent-row-val { font-family:'Space Mono',monospace; font-size:13px; }
+.agent-row-val.green { color:var(--green); }
+.agent-row-val.muted { color:var(--muted); }
+.agent-running { display:flex; align-items:center; gap:6px; font-family:'Space Mono',monospace; font-size:11px; color:var(--green); }
+.run-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:pulse 2s infinite; }
+
+/* RIGHT PANEL */
+.right-panel { padding:24px; background:var(--bg2); }
+.panel-title { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+
+/* DEPOSIT/WITHDRAW TABS */
+.action-tabs { display:flex; margin-bottom:20px; border:1px solid var(--border); }
+.action-tab { flex:1; padding:10px; text-align:center; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; color:var(--muted); }
+.action-tab.active { background:var(--green-dim); color:var(--green); }
+
+/* INPUT */
+.input-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px; }
+.input-wrap { display:flex; align-items:center; border:1px solid var(--border); background:var(--bg); margin-bottom:16px; }
+.input-wrap input { flex:1; background:transparent; border:none; outline:none; padding:14px 16px; font-family:'Space Mono',monospace; font-size:14px; color:var(--text); }
+.input-unit { padding:0 16px; font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); border-left:1px solid var(--border); height:100%; display:flex; align-items:center; padding:14px 16px; }
+.input-wrap:focus-within { border-color:rgba(0,232,143,0.3); }
+
+/* SUMMARY */
+.summary { border:1px solid var(--border); padding:16px; margin-bottom:16px; display:flex; flex-direction:column; gap:10px; }
+.summary-row { display:flex; justify-content:space-between; align-items:center; }
+.summary-key { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); }
+.summary-val { font-family:'Space Mono',monospace; font-size:12px; color:var(--text); }
+.summary-val.green { color:var(--green); }
+
+/* BTN */
+.action-btn { width:100%; padding:14px; background:var(--green); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; letter-spacing:0.06em; border:none; cursor:pointer; transition:box-shadow 0.2s, transform 0.2s; margin-bottom:12px; }
+.action-btn:hover { box-shadow:0 0 24px rgba(0,232,143,0.4); transform:translateY(-1px); }
+.action-btn.ghost { background:transparent; color:var(--muted); border:1px solid var(--border); }
+.action-btn.ghost:hover { border-color:var(--green); color:var(--green); box-shadow:none; transform:none; }
+
+/* PROTOCOL INFO */
+.info-grid { display:flex; flex-direction:column; gap:8px; margin-top:20px; padding-top:20px; border-top:1px solid var(--border); }
+.info-row { display:flex; justify-content:space-between; }
+.info-key { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); }
+.info-val { font-family:'Space Mono',monospace; font-size:11px; color:var(--text); }
+.info-val.green { color:var(--green); }
+.info-val.sol { color:#b57aff; }
+
+/* CURSOR */
+* { cursor: none !important; }
+#cursor-dot { width:8px;height:8px;background:var(--green);border-radius:50%;position:fixed;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);box-shadow:0 0 10px rgba(0,232,143,0.8); }
+#cursor-ring { width:36px;height:36px;border:1.5px solid rgba(0,232,143,0.5);border-radius:50%;position:fixed;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width 0.2s,height 0.2s,border-color 0.2s; }
+#cursor-ring.hovering { width:50px;height:50px;border-color:var(--green);background:rgba(0,232,143,0.04); }
+
+  /* FAQ */
+  .faq-section { padding:100px 48px; border-top:1px solid var(--border); }
+  .faq-list { margin-top:48px; display:flex; flex-direction:column; gap:1px; border:1px solid var(--border); background:var(--border); }
+  .faq-item { background:var(--bg2); overflow:hidden; }
+  .faq-q { padding:24px 28px; font-size:16px; font-weight:600; cursor:pointer; display:flex; justify-content:space-between; align-items:center; transition:background 0.2s; }
+  .faq-q:hover { background:var(--bg3); }
+  .faq-icon { font-family:"Space Mono",monospace; font-size:18px; color:var(--green); transition:transform 0.3s; }
+  .faq-a { max-height:0; overflow:hidden; transition:max-height 0.4s ease, padding 0.3s; font-size:14px; color:var(--muted); line-height:1.75; padding:0 28px; }
+  .faq-item.open .faq-a { max-height:200px; padding:0 28px 24px; }
+  .faq-item.open .faq-icon { transform:rotate(45deg); }
 </style>
 </head>
 <body>
@@ -263,6 +424,7 @@
     <a href="#agents">Agents</a>
     <a href="#tokenomics">Token</a>
     <a href="#roadmap">Roadmap</a>
+    <a href="#faq">FAQ</a>
     <a href="#whitepaper">Whitepaper</a>
     <a href="https://github.com" target="_blank">GitHub</a>
     <a href="https://x.com/MoneyProt" target="_blank" class="nav-twitter">
@@ -589,6 +751,78 @@
     </a>
   </div>
 </section>
+
+<!-- DEMO -->
+<div class="demo-section" id="demo">
+  <div class="section-tag">// Live Preview</div>
+  <h2 class="section-title">This is what your<br><em>vault looks like.</em></h2>
+  <p style="margin-top:20px;color:var(--muted);max-width:560px;line-height:1.75;font-size:15px;">Mock data — real interface. Mainnet deployment coming Q3 2026.</p>
+
+  <div class="demo-frame-wrap">
+    <div class="demo-frame-bar">
+      <div class="t-dot red"></div><div class="t-dot yellow"></div><div class="t-dot green"></div>
+      <span class="demo-frame-url">moneyprot.xyz/demo — DEVNET</span>
+    </div>
+    <div class="demo-inner">
+      <!-- MINI DEMO STATS -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border);">
+        <div style="background:var(--bg2);padding:20px 24px;"><div style="font-family:Space Mono,monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:8px;">TOTAL VALUE LOCKED</div><div style="font-size:24px;font-weight:800;color:var(--green);">$142.8M</div><div style="font-family:Space Mono,monospace;font-size:11px;color:var(--green);margin-top:6px;">+2.4% 24h</div></div>
+        <div style="background:var(--bg2);padding:20px 24px;"><div style="font-family:Space Mono,monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:8px;">CURRENT NAV</div><div style="font-size:24px;font-weight:800;color:var(--green);">$1.0842</div><div style="font-family:Space Mono,monospace;font-size:11px;color:var(--green);margin-top:6px;">+0.31% 24h</div></div>
+        <div style="background:var(--bg2);padding:20px 24px;"><div style="font-family:Space Mono,monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:8px;">APY (7-DAY)</div><div style="font-size:24px;font-weight:800;color:var(--green);">24.7%</div><div style="font-family:Space Mono,monospace;font-size:11px;color:var(--muted);margin-top:6px;">28.3% 30-day</div></div>
+        <div style="background:var(--bg2);padding:20px 24px;"><div style="font-family:Space Mono,monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:8px;">VAULT STATUS</div><div style="font-size:20px;font-weight:800;color:var(--green);">● ACTIVE</div><div style="font-family:Space Mono,monospace;font-size:11px;color:var(--muted);margin-top:6px;">5 strategies running</div></div>
+      </div>
+      <!-- CHART -->
+      <div style="padding:24px 28px;border-bottom:1px solid var(--border);">
+        <div style="font-family:Space Mono,monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:16px;">NAV HISTORY (30D)</div>
+        <svg width="100%" height="120" viewBox="0 0 800 120" preserveAspectRatio="none">
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00e88f" stop-opacity="0.25"/><stop offset="100%" stop-color="#00e88f" stop-opacity="0"/></linearGradient></defs>
+          <line x1="0" y1="40" x2="800" y2="40" stroke="rgba(0,232,143,0.06)" stroke-width="1"/>
+          <line x1="0" y1="80" x2="800" y2="80" stroke="rgba(0,232,143,0.06)" stroke-width="1"/>
+          <path d="M0,105 C80,100 160,95 240,88 C320,80 400,72 480,60 C560,48 640,32 720,18 C760,11 780,8 800,6 L800,120 L0,120 Z" fill="url(#g2)"/>
+          <path d="M0,105 C80,100 160,95 240,88 C320,80 400,72 480,60 C560,48 640,32 720,18 C760,11 780,8 800,6" fill="none" stroke="#00e88f" stroke-width="2"/>
+          <circle cx="800" cy="6" r="4" fill="#00e88f" style="filter:drop-shadow(0 0 6px #00e88f)"/>
+        </svg>
+      </div>
+      <!-- DEMO CTA -->
+      <div style="padding:24px 28px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-family:Space Mono,monospace;font-size:12px;color:var(--muted);">Full dashboard available on mainnet — Q3 2026</div>
+        <a href="https://x.com/MoneyProt" target="_blank" class="btn-primary" style="padding:10px 24px;font-size:12px;">Get Notified →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="section-tag">// FAQ</div>
+  <h2 class="section-title">Common<br><em>questions.</em></h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>What is Money Protocol?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">Money Protocol is an autonomous DeFi system on Solana. Three programs and two wallets manage capital, rebalance positions, and distribute yield automatically — without human intervention.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>How do the agents work?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">Each agent runs on-chain with a specific strategy — arbitrage, yield optimization, liquidity deployment, etc. They operate 24/7 within risk parameters you define, compounding returns each epoch.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>When is the token launch?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">The $MONEY token generation event is planned for Q3 2026 alongside mainnet deployment. Follow @MoneyProt on X and join our Telegram for launch updates.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Is it non-custodial?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">Yes. Money Protocol never takes custody of your funds. Agents operate within permissioned bounds defined by your wallet. You can withdraw at any time.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Why Solana?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">400ms finality, $0.00025 average fees, and 65,000 TPS. Solana is the only chain where autonomous agents can operate at the speed of markets without fees eating into yield.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Has the protocol been audited?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">Security audit is currently in progress as part of Phase 01. Results will be published publicly before mainnet deployment. No funds will be at risk before audit completion.</div>
+    </div>
+  </div>
+</section>
 <section class="cta-section">
   <h2>Three programs.<br>Two wallets.<br><span style="color:var(--green);">Prove it on-chain.</span></h2>
   <p>No inflation. No governance theater. Just autonomous agents, real yield, and Solana as the witness.</p>
@@ -653,6 +887,15 @@
     el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
     el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
   });
+</script>
+
+<script>
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
 </script>
 </body>
 </html>
