@@ -1,0 +1,38 @@
+{
+  "name": "money-protocol",
+  "version": "0.1.0",
+  "description": "Autonomous Treasury Management for AI Agent Balances on Solana",
+  "license": "MIT",
+  "private": true,
+  "homepage": "https://moneyprot.xyz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moneyprot/money-protocol"
+  },
+  "keywords": [
+    "solana",
+    "defi",
+    "autonomous",
+    "yield",
+    "agents",
+    "anchor"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "anchor build",
+    "test": "anchor test",
+    "deploy": "anchor deploy",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@coral-xyz/anchor": "^0.30.0",
+    "@solana/web3.js": "^1.91.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0"
+  }
+}

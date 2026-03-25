@@ -1,0 +1,30 @@
+[toolchain]
+
+[features]
+seeds = false
+skip-lint = false
+
+[programs.localnet]
+fund_vault = "TBD"
+agent_router = "TBD"
+yield_distributor = "TBD"
+
+[programs.devnet]
+fund_vault = "TBD"
+agent_router = "TBD"
+yield_distributor = "TBD"
+
+[programs.mainnet]
+fund_vault = "TBD"
+agent_router = "TBD"
+yield_distributor = "TBD"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "Devnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
